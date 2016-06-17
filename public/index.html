@@ -18,13 +18,16 @@
     <div class="container">
 
       <nav class="navbar navbar-light bg-faded">
-        <a class="navbar-brand" href="#">Mirror's Edge: Catalyst Dash Leaderboard</a>
-        <a class="navbar-brand pull-xs-right">Your Rank Average: {{avgRank | number : 2}}</a>
+        <a class="navbar-brand" href="#">Mirror's Edge: Catalyst All-Platform Dash Leaderboard</a>
+        <a class="navbar-brand pull-xs-right">
+          <!--Your Rank Average: {{avgRank | number : 2}}>-->
+          Made by AGTrgger_
+        </a>
       </nav>
 
 
       <div class="list-group col-xs-4">
-        <li class="list-group-item" ng-repeat="run in rankInfo"><span ng-click="getLeaderboard(run.name)">{{run.name}}</span> <span class="pull-xs-right">{{run.rank}}</span></li>
+        <li class="list-group-item" ng-repeat="run in rankInfo"><span ng-click="getLeaderboard(run.serverName)">{{run.name}}</span> <!--<span class="pull-xs-right">{{run.rank}}</span>--></li>
       </div>
 
       <div class="list-group col-xs-8">

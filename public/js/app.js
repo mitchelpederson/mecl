@@ -10,6 +10,31 @@ app.controller("leaderboardCtrl", function($scope, $http){
 
   $scope.leaderboard = [];
 
+  routeNames = {
+    'ch_rrt_tv2_time': 'Caleb\'s Run',
+    'ch_rrt_tv04_time': 'Don\'t Fall Down',
+    'ch_rrt_dt4_time': 'Backstreet Bluff',
+    'ch_rrt_tv3_time': 'Noah\'s Run',
+    'ch_rrt_anc1_time': 'The Allcom Shuffle',
+    'ch_rrt_dt1_time': 'High Roller Avenue',
+    'ch_rrt_rz3_time': 'Under Construction',
+    'ch_rrt_tv05_time': 'The Scenic Route',
+    'ch_rrt_dt2_time': 'Concrete Canyon',
+    'ch_rrt_rz4_time': 'Rezoning Dash',
+    'ch_rrt_dt3_time': 'Nomad\'s Run',
+    'ch_rrt_anc4_time': 'Quite a View',
+    'ch_rrt_anc5_time': 'Heading Home',
+    'ch_rrt_bm1_time': 'Birdman\'s Route',
+    'ch_rrt_anc6_time': 'Donkey in an Oven',
+    'ch_rrt_tv1_time': 'Too Close to the Sun',
+    'ch_rrt_dt6_time': 'Feature Creep',
+    'ch_rrt_anc2_time': 'Take Me to the Gridnode',
+    'ch_rrt_rz2_time': 'Old Tunnels',
+    'ch_rrt_anc3_time': 'Consumer Mayhem',
+    'ch_rrt_dt5_time': 'A Handy Shortcut',
+    'ch_rrt_rz1_time': 'Out in the Open'
+  };
+
   $scope.formatScore = function(score) {
 
     fscore = "";
@@ -41,7 +66,7 @@ app.controller("leaderboardCtrl", function($scope, $http){
       var runs = [];
 
       for (var i = 0; i < keys.length; i++) {
-        runs.push({'name': keys[i], 'rank': response.data.result[keys[i]].rank});
+        runs.push({'name': routeNames[keys[i]], 'serverName': keys[i], 'rank': response.data.result[keys[i]].rank});
       }
 
       $scope.rankInfo = runs;
