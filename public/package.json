@@ -1,0 +1,23 @@
+{
+  "name": "mecl",
+  "version": "1.0.0",
+  "description": "Mirror's Edge: Catalyst all-platform leaderboard",
+  "main": "index.html",
+  "dependencies": {
+    "bower": "^1.7.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mitchelpederson/mecl.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mitchelpederson/mecl/issues"
+  },
+  "homepage": "https://github.com/mitchelpederson/mecl#readme"
+}
