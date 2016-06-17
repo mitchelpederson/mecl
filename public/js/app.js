@@ -66,7 +66,12 @@ app.controller("leaderboardCtrl", function($scope, $http){
       var runs = [];
 
       for (var i = 0; i < keys.length; i++) {
-        runs.push({'name': routeNames[keys[i]], 'serverName': keys[i], 'rank': response.data.result[keys[i]].rank});
+        runs.push({
+          'name': routeNames[keys[i]], 
+          'serverName': keys[i], 
+          'rank': response.data.result[keys[i]].rank,
+          'active':false
+        });
       }
 
       $scope.rankInfo = runs;
@@ -87,9 +92,20 @@ app.controller("leaderboardCtrl", function($scope, $http){
     });
 
 
+    $scope.isActiveRun = function(runID) {
+      if (runID == $scope.activeRun) {
+        return {'color': 'white', 'background-color':'red'};
+      }
+      else {
+        return {};
+      }
+    }
+
     $scope.getLeaderboard = function(runID) {
 
       console.log("Getting leaderboard for " + runID);
+
+      $scope.activeRun = runID;
 
       $scope.leaderboard = [];
 

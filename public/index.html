@@ -12,12 +12,13 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body ng-app="mecLeaderboard" ng-controller="leaderboardCtrl">
 
-    <div class="container">
+    <div class="container-flush">
 
-      <nav class="navbar navbar-light bg-faded">
+      <nav class="navbar navbar-light bg-faded navbar-me">
         <a class="navbar-brand" href="#">Mirror's Edge: Catalyst All-Platform Dash Leaderboard</a>
         <a class="navbar-brand pull-xs-right">
           <!--Your Rank Average: {{avgRank | number : 2}}>-->
@@ -25,16 +26,26 @@
         </a>
       </nav>
 
+      <div class="col-xs-2"></div>
+      <div class="list-group col-xs-4">
+        <span ng-repeat="run in rankInfo">
+          <li class="list-group-item" ng-style="isActiveRun(run.serverName)"ng-click="getLeaderboard(run.serverName)">{{run.name}} <!--<span class="pull-xs-right">{{run.rank}}</span>--></li>
+
+
+      </div>
 
       <div class="list-group col-xs-4">
-        <li class="list-group-item" ng-repeat="run in rankInfo"><span ng-click="getLeaderboard(run.serverName)">{{run.name}}</span> <!--<span class="pull-xs-right">{{run.rank}}</span>--></li>
-      </div>
-
-      <div class="list-group col-xs-8">
-        <li class="list-group-item" ng-repeat="entry in leaderboard | orderBy : 'score'">{{entry.plat}} {{entry.name}}: {{entry.score}}
+        <li class="list-group-item" ng-repeat="entry in leaderboard | orderBy : 'score'">
+          <span ng-switch="entry.plat">
+            <span ng-switch-when="ps4"><img src="img/psicon.png"></span>
+            <span ng-switch-when="pc"><img src="img/pcicon.png"></span>
+            <span ng-switch-when="x1"><img src="img/xboxicon.png"></span>
+            <span ng-switch-default></span>
+          </span> {{entry.name}} <span class="pull-xs-right">{{entry.score}}</span>
       </div>
     </div>
-    
+
+    <div class="col-xs-2"></div>
 
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script>

@@ -1,0 +1,10 @@
+.active-run {
+	background-color: red;
+	color: white;
+}
+
+.navbar-me {
+	background-color: white;
+	color: red;
+	border:1px red solid;
+}
