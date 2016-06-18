@@ -3,6 +3,7 @@ var app = angular.module("mecLeaderboard", []);
 app.controller("leaderboardCtrl", function($scope, $http){
 
   $scope.res = "Waiting...";
+  $scope.activeUser = false;
 
   ps4Leaderboard = [];
   xboxLeaderboard = [];
@@ -101,6 +102,85 @@ app.controller("leaderboardCtrl", function($scope, $http){
       }
     }
 
+    $scope.getUserInfo = function(user) {
+
+      $scope.activeUser = {};
+      var plat = "";
+
+      if (user.plat == "ps4") {
+        plat = "ps4";
+      }
+      else if (user.plat == "x1") {
+        plat = "xboxone";
+      }
+      else if (user.plat == "pc") {
+        plat = "pc";
+      }
+
+      $scope.activeUser.name = user.name;
+      $scope.activeUser.platform = user.plat;
+
+      $http({
+
+        method: 'POST',
+        url:'https://mec-gw.ops.dice.se/jsonrpc/prod_default/prod_default/' + plat + '/api',
+        data: {"jsonrpc":"2.0","method":"Pamplona.getPlayerRunnersRoutePercentiles","params":{"personaId":user.personaId},"id":"b64fd849-c1be-4964-bc2f-d7404b34c7dc"},
+        headers: {
+          'Content-Type': "application/json"
+        }
+
+      }).then(function success(response) {
+
+        console.log("Got user");
+        return response;
+
+      }, function fail(response) {
+
+      }).then(function readResult(response) {
+
+        var keys = Object.keys(response.data.result);
+
+        var runs = [];
+
+        for (var i = 0; i < keys.length; i++) {
+          runs.push({
+            'name': routeNames[keys[i]], 
+            'serverName': keys[i], 
+            'rank': response.data.result[keys[i]].rank,
+            'completed':response.data.result[keys[i]].hasPlayed
+          });
+        }
+
+        $scope.activeUser.highRank = 999999;
+        $scope.activeUser.avgRank = 0.0;
+        $scope.activeUser.completedAll = true;
+
+        for (var i = 0; i < 22; i++) {
+
+            // Check if completed
+          if (runs[i].completed == false) {
+            $scope.activeUser.completedAll = false;
+          }
+
+            // Check if this is the new highest rank
+          if (runs[i].rank != null && runs[i].rank < $scope.activeUser.highRank) {
+            $scope.activeUser.highRank = runs[i].rank;
+          }
+            
+            // Add run to average
+          $scope.activeUser.avgRank += runs[i].rank;
+        }
+
+          // Average the ranks only if they have completed all
+        if ($scope.activeUser.completedAll == true) {
+          $scope.activeUser.avgRank /= 22.0;
+        }
+        
+
+      });
+
+    }
+
     $scope.getLeaderboard = function(runID) {
 
       console.log("Getting leaderboard for " + runID);
@@ -128,6 +208,7 @@ app.controller("leaderboardCtrl", function($scope, $http){
           ps4Leaderboard.push({
 
             'name': response.data.result.leaderboard.users[i].name,
+            'personaId': response.data.result.leaderboard.users[i].personaId,
             'score': $scope.formatScore(response.data.result.leaderboard.users[i].score),
             'plat': 'ps4'
 
@@ -161,6 +242,7 @@ app.controller("leaderboardCtrl", function($scope, $http){
             pcLeaderboard.push({
 
               'name': pcResponse.data.result.leaderboard.users[i].name,
+              'personaId': pcResponse.data.result.leaderboard.users[i].personaId,
               'score': $scope.formatScore(pcResponse.data.result.leaderboard.users[i].score),
               'plat': 'pc'
 
@@ -197,6 +279,7 @@ app.controller("leaderboardCtrl", function($scope, $http){
               xboxLeaderboard.push({
 
                 'name': xResponse.data.result.leaderboard.users[i].name,
+                'personaId': xResponse.data.result.leaderboard.users[i].personaId,
                 'score': $scope.formatScore(xResponse.data.result.leaderboard.users[i].score),
                 'plat': 'x1'
 

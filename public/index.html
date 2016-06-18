@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
+    <link href='https://fonts.googleapis.com/css?family=Exo' rel='stylesheet' type='text/css'>
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
     <script src="js/app.js"></script>
@@ -19,23 +21,23 @@
     <div class="container-flush">
 
       <nav class="navbar navbar-light bg-faded navbar-me">
-        <a class="navbar-brand" href="#">Mirror's Edge: Catalyst All-Platform Dash Leaderboard</a>
+        <a class="navbar-brand brand-red" href="#"><span class="brand-red">Mirror's Edge: Catalyst All-Platform Dash Leaderboard</span></a>
         <a class="navbar-brand pull-xs-right">
           <!--Your Rank Average: {{avgRank | number : 2}}>-->
-          Made by AGTrgger_
+          <span class=" brand-red ">Made by AGTrgger_</span>
         </a>
       </nav>
 
-      <div class="col-xs-2"></div>
-      <div class="list-group col-xs-4">
-        <span ng-repeat="run in rankInfo">
-          <li class="list-group-item" ng-style="isActiveRun(run.serverName)"ng-click="getLeaderboard(run.serverName)">{{run.name}} <!--<span class="pull-xs-right">{{run.rank}}</span>--></li>
+      <div class="col-lg-2"></div>
+
+      <div class="list-group col-lg-2 col-xs-3">
+        <li class="list-group-item border-red inactive-run" ng-repeat="run in rankInfo" ng-style="isActiveRun(run.serverName)"ng-click="getLeaderboard(run.serverName)">{{run.name}} <!--<span class="pull-xs-right">{{run.rank}}</span>--></li>
 
 
       </div>
 
-      <div class="list-group col-xs-4">
-        <li class="list-group-item" ng-repeat="entry in leaderboard | orderBy : 'score'">
+      <div class="list-group col-lg-3 col-xs-5">
+        <li class="list-group-item border-red inactive-user" ng-repeat="entry in leaderboard | orderBy : 'score'" ng-click="getUserInfo(entry)">
           <span ng-switch="entry.plat">
             <span ng-switch-when="ps4"><img src="img/psicon.png"></span>
             <span ng-switch-when="pc"><img src="img/pcicon.png"></span>
@@ -43,9 +45,17 @@
             <span ng-switch-default></span>
           </span> {{entry.name}} <span class="pull-xs-right">{{entry.score}}</span>
       </div>
+
+      <div class="list-group col-lg-3 col-xs-4" ng-show="activeUser">
+        <li class="list-group-item border-red">User: <span class="pull-xs-right">{{activeUser.name}}</span></li>
+        <li class="list-group-item border-red">Platform: <span class="pull-xs-right">{{activeUser.platform}}</span></li>
+        <li class="list-group-item border-red" ng-show="activeUser.completedAll">Average Platform Rank: <span class="pull-xs-right">{{activeUser.avgRank | number: 2}}</span></li>
+        <li class="list-group-item border-red">Highest Platform Rank: <span class="pull-xs-right">{{activeUser.highRank}}</span></li>
+      </div>
+
+      <div class="col-lg-2"></div>
     </div>
 
-    <div class="col-xs-2"></div>
 
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script>
