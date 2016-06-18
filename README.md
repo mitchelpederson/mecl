@@ -4,6 +4,8 @@ https://mecleaderboard.firebaseapp.com
 
 By looking at www.mirrorsedge.com and its API calls, I was able to copy the calls and create a leaderboard with all three platforms. 
 
+This uses Bootstrap v4 Alpha and AngularJS 1.4.8
+
 Features:
 - Consolidated leaderboard for all three platforms
 - Click on a user to see platform-specific statistics
@@ -18,3 +20,6 @@ Future Goals:
 - Add more user stats
 
 You can help by making API calls and seeing what else can be gathered from the servers. Just don't spam calls because DICE may close off the API from public use.
+
+I am sol_r on Reddit and AGTrgger_ on the PSN
+
